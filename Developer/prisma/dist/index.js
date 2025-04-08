@@ -15,10 +15,27 @@ function main() {
     return __awaiter(this, void 0, void 0, function* () {
         const newUser = yield client.users.create({
             data: {
-                username: "kirti123",
+                username: "kir23",
                 password: "securepass123",
                 age: 21,
                 city: "Chandigarh",
+                todos: {
+                    create: [
+                        {
+                            title: "Finish backend setup",
+                            description: "Complete Prisma schema and migrations",
+                            done: false,
+                        },
+                        {
+                            title: "UI Design",
+                            description: "Create Figma wireframes for dashboard",
+                            done: true,
+                        },
+                    ],
+                },
+            },
+            include: {
+                todos: true,
             },
         });
         console.log("User created:", newUser);

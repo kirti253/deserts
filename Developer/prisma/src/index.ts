@@ -4,10 +4,27 @@ const client = new PrismaClient();
 async function main() {
   const newUser = await client.users.create({
     data: {
-      username: "kirti123",
+      username: "kir23",
       password: "securepass123",
       age: 21,
       city: "Chandigarh",
+      todos: {
+        create: [
+          {
+            title: "Finish backend setup",
+            description: "Complete Prisma schema and migrations",
+            done: false,
+          },
+          {
+            title: "UI Design",
+            description: "Create Figma wireframes for dashboard",
+            done: true,
+          },
+        ],
+      },
+    },
+    include: {
+      todos: true,
     },
   });
 
