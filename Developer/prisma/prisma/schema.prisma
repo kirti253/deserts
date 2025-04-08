@@ -29,5 +29,23 @@ model Post {
   published Boolean  @default(false)
   author    User     @relation(fields: [authorId], references: [id])
   authorId  Int
+  
 }
 
+model users {
+  id       Int     @id @default(autoincrement())
+  username String  @unique
+  password String 
+  age      Int
+  city     String
+  todos    todo[]
+}
+
+model todo {
+  id          Int     @id @default(autoincrement())
+  title       String
+  description String
+  done        Boolean
+  userId      Int
+  user        users   @relation(fields: [userId], references: [id])
+}
