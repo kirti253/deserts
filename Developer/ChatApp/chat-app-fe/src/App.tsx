@@ -6,8 +6,9 @@ function App() {
   const [messages, setMessages] = useState(["Hello from server!"]);
 
   // Refs to store WebSocket connection and input element
-  const wsRef = useRef(); // WebSocket connection reference
-  const inputRef = useRef(); // Input field reference
+  const wsRef = useRef<HTMLInputElement>(null); // WebSocket connection reference
+  const inputRef = useRef<HTMLInputElement>(null);
+  // Input field reference
 
   useEffect(() => {
     // Create new WebSocket connection to local server
