@@ -2,47 +2,38 @@ import { useEffect, useRef, useState } from "react";
 import "./App.css";
 
 function App() {
-  // State to store chat messages with initial "Hello from server!" message
   const [messages, setMessages] = useState(["Hello from server!"]);
 
-  // Refs to store WebSocket connection and input element
-  const wsRef = useRef<HTMLInputElement>(null); // WebSocket connection reference
+  const wsRef = useRef<HTMLInputElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  // Input field reference
 
   useEffect(() => {
-    // Create new WebSocket connection to local server
     const ws = new WebSocket("ws://localhost:8080");
 
-    // Handle incoming messages from server
     ws.onmessage = (event) => {
-      setMessages((m) => [...m, event.data]); // Add new message to messages array
+      setMessages((m) => [...m, event.data]);
     };
 
-    // Store WebSocket connection in ref for later use
     //@ts-ignore
     wsRef.current = ws;
 
-    // When connection opens, send join room message
     ws.onopen = () => {
       ws.send(
         JSON.stringify({
           type: "join",
           payload: {
-            roomId: "red", // Join room with ID "red"
+            roomId: "red",
           },
         })
       );
     };
 
-    // Cleanup: close WebSocket when component unmounts
     return () => {
       ws.close();
     };
-  }, []); // Empty dependency array means this runs once on mount
+  }, []);
 
   return (
-    // Main chat interface UI
     <div className="h-screen bg-black">
       <br />
       <br />
@@ -55,14 +46,14 @@ function App() {
           </div>
         ))}
       </div>
-      {/* Message input and send button */}
+
       <div className="w-full bg-white flex">
         <input ref={inputRef} id="message" className="flex-1 p-4"></input>
         <button
           onClick={() => {
             // @ts-ignore
             const message = inputRef.current?.value;
-            // Send chat message through WebSocket
+
             // @ts-ignore
             wsRef.current.send(
               JSON.stringify({
