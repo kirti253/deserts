@@ -1,52 +1,36 @@
 import NextAuth from "next-auth";
-
 import CredentialsProvider from "next-auth/providers/credentials";
-import GoogleProvider from "next-auth/providers/google";
-
-console.log(process.env.NEXTAUTH_SECRET);
 
 const handler = NextAuth({
   providers: [
     CredentialsProvider({
-      name: "Email", //jo yaha likh rhe hia woh likha ayega front mai jaise iske liye ayega ki Sign in with email.
+      name: "Credentials",
       credentials: {
-        username: {
-          label: "Username",
-          type: "text",
-          placeholder: "Type your username here !",
-        },
+        username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const username = credentials?.username;
-        const password = credentials?.password;
+        const { username, password } = credentials;
 
-        console.log(username, password);
+        console.log("Authorize called with:", username, password);
 
-        //db request to check if the username and password are correct basically the authentication part!
-        const user = {
-          id: "1",
-          name: "Rohan Dev Singh",
-          email: "rohandev.rs@gmail.com",
-        };
-
-        if (user) {
-          return user;
-        } else {
-          return null;
+        // Dummy auth logic
+        if (username === "admin" && password === "admin") {
+          return {
+            id: "1",
+            name: "Admin User",
+            email: "admin@example.com",
+          };
         }
-      },
-    }),
 
-    GoogleProvider({
-      //yeh google wla sign ka method daal dega like sign in with google
-      clientId: "ABC",
-      clientSecret: "ABC",
+        return null; // failed login
+      },
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+    signIn: "/login", // optional: redirect failed logins to /login
+  },
 });
 
 export { handler as GET, handler as POST };
-
-//ispe yeh next-auth install krnge na yeh khudh ek front bna kr dega ..jispe help krega ki jo credentials provide krnge us hisb ka woh frontend ka bana dega.. jitne credentials add krnge tb unka !
