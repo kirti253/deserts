@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { PostComponent } from "./post";
-import { GoBellFill } from "react-icons/go";
-
+import { Notific } from "./components/notification";
+import { NewFnc } from "./components/toggle";
+import { Button } from "./components/button";
 function App() {
   const [posts, setposts] = useState([]);
   function addPosts() {
@@ -30,43 +31,23 @@ function App() {
     <div style={{ background: "#dfe6e9", minHeight: "100vh" }}>
       <button
         onClick={addPosts}
-        style={{ padding: 10, margin: 10, borderRadius: 5, cursor: "pointer" }}
+        style={{
+          padding: 10,
+          margin: 10,
+          borderRadius: 5,
+          cursor: "pointer",
+        }}
       >
         Add Post
       </button>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div>{postComponents}</div>
       </div>
+
+      <Notific />
+      <NewFnc />
+      <Button />
     </div>
   );
 }
-// const Counter = () => {
-//   const [count, setCount] = useState(0);
-//   return (
-//     <div style={{ margin: "0px 10px" }}>
-//       <h2>Count:{count}</h2>
-//       <button onClick={() => setCount(count + 1)}>Increment </button>
-//     </div>
-//   );
-// };
-// const ToggleMessage = () => {
-//   const [notification, notificationCount] = useState(0);
-//   function toggle() {
-//     notificationCount(notification + 1);
-//   }
-//   return (
-//     <div>
-//       {}
-//       <button
-//         onClick={toggle}
-//         style={{ padding: 10, margin: 10, cursor: "pointer" }}
-//       >
-//         increase count
-//       </button>
-
-//       {notification}
-//     </div>
-//   );
-// };
-
 export default App;
