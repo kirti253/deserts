@@ -12,8 +12,8 @@ export function SiteHeader() {
       <Link href="/" className="brand-mark">
         <span className="brand-dot" />
         <div>
-          <strong>Farmer Direct Market</strong>
-          <span>Direct crop trading MVP</span>
+          <strong>Kissan Setu</strong>
+          <span>Direct crop trading </span>
         </div>
       </Link>
 
