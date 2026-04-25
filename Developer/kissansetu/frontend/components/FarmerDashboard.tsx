@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { FormEvent, startTransition, useEffect, useState } from "react";
+import { FiMapPin, FiPhone, FiX, FiLoader } from "react-icons/fi";
+import { GiWheat } from "react-icons/gi";
 import { createListing, deleteListing, formatCurrency, getListings } from "@/lib/api";
 import { getStoredUser } from "@/lib/storage";
 import { CropListing, ListingFormValues, UserProfile } from "@/lib/types";
@@ -138,114 +140,156 @@ export function FarmerDashboard() {
         </div>
       </section>
 
-      <div className="dashboard-grid">
-        <form className="panel-card form-card" onSubmit={handleSubmit}>
-          <div className="section-heading compact">
-            <span className="eyebrow">Add crop</span>
-            <h2>Create a new listing</h2>
-          </div>
+      <div className="dashboard-content">
+        <div className="dashboard-sidebar">
+          <form className="listing-form" onSubmit={handleSubmit}>
+            <div className="form-header">
+              <h2>List Your Crop</h2>
+              <p>Fill in the details below</p>
+            </div>
 
-          <div className="field-grid">
-            <label className="field">
-              <span>Crop Name</span>
-              <input
-                value={form.cropName}
-                onChange={(event) => setForm({ ...form, cropName: event.target.value })}
-                placeholder="Tomato"
-              />
-            </label>
+            <div className="form-inputs">
+              <label className="form-field compact">
+                <span className="field-label">Crop Name</span>
+                <input
+                  type="text"
+                  value={form.cropName}
+                  onChange={(event) => setForm({ ...form, cropName: event.target.value })}
+                  placeholder="Tomato, Wheat, etc."
+                  required
+                />
+              </label>
 
-            <label className="field">
-              <span>Price</span>
-              <input
-                value={form.price}
-                onChange={(event) => setForm({ ...form, price: event.target.value })}
-                placeholder="18"
-                inputMode="decimal"
-              />
-            </label>
+              <div className="form-row">
+                <label className="form-field compact">
+                  <span className="field-label">Price</span>
+                  <div className="input-with-icon">
+                    <span className="currency-symbol">₹</span>
+                    <input
+                      type="number"
+                      value={form.price}
+                      onChange={(event) => setForm({ ...form, price: event.target.value })}
+                      placeholder="0"
+                      inputMode="decimal"
+                      min="0"
+                      step="0.01"
+                      required
+                    />
+                  </div>
+                </label>
 
-            <label className="field">
-              <span>Quantity</span>
-              <input
-                value={form.quantity}
-                onChange={(event) => setForm({ ...form, quantity: event.target.value })}
-                placeholder="50 kg"
-              />
-            </label>
+                <label className="form-field compact">
+                  <span className="field-label">Quantity</span>
+                  <input
+                    type="text"
+                    value={form.quantity}
+                    onChange={(event) => setForm({ ...form, quantity: event.target.value })}
+                    placeholder="50 kg"
+                    required
+                  />
+                </label>
+              </div>
 
-            <label className="field">
-              <span>Location</span>
-              <input
-                value={form.location}
-                onChange={(event) => setForm({ ...form, location: event.target.value })}
-                placeholder="Nashik"
-              />
-            </label>
+              <label className="form-field compact">
+                <span className="field-label">Location</span>
+                <input
+                  type="text"
+                  value={form.location}
+                  onChange={(event) => setForm({ ...form, location: event.target.value })}
+                  placeholder="City, State"
+                  required
+                />
+              </label>
 
-            <label className="field">
-              <span>Farmer name</span>
-              <input
-                value={form.farmerName}
-                onChange={(event) => setForm({ ...form, farmerName: event.target.value })}
-                placeholder="Your name"
-              />
-            </label>
+              <label className="form-field compact">
+                <span className="field-label">Your Name</span>
+                <input
+                  type="text"
+                  value={form.farmerName}
+                  onChange={(event) => setForm({ ...form, farmerName: event.target.value })}
+                  placeholder="Full name"
+                  required
+                />
+              </label>
 
-            <label className="field">
-              <span>Contact Number</span>
-              <input
-                value={form.contactNumber}
-                onChange={(event) => setForm({ ...form, contactNumber: event.target.value })}
-                placeholder="Phone number"
-                inputMode="tel"
-              />
-            </label>
-          </div>
+              <label className="form-field compact">
+                <span className="field-label">Contact Number</span>
+                <input
+                  type="tel"
+                  value={form.contactNumber}
+                  onChange={(event) => setForm({ ...form, contactNumber: event.target.value })}
+                  placeholder="+91 9876543210"
+                  inputMode="tel"
+                  required
+                />
+              </label>
+            </div>
 
-          {error ? <p className="form-error">{error}</p> : null}
+            {error && <div className="form-error-box">{error}</div>}
 
-          <button type="submit" className="button button-primary button-full" disabled={submitting}>
-            {submitting ? "Adding crop..." : "Add Crop"}
-          </button>
-        </form>
+            <button type="submit" className="button button-primary button-full form-submit" disabled={submitting}>
+              {submitting ? (
+                <>
+                  <span className="spinner-small"></span>
+                  Posting...
+                </>
+              ) : (
+                "Post Listing"
+              )}
+            </button>
+          </form>
+        </div>
 
-        <div className="panel-card listings-panel">
-          <div className="section-heading compact">
-            <span className="eyebrow">My listings</span>
-            <h2>Current crop cards</h2>
+        <div className="dashboard-main">
+          <div className="listings-header">
+            <h2>Your Active Listings</h2>
+            <span className="listings-count">{listings.length}</span>
           </div>
 
           {loading ? (
-            <p className="muted-copy">Loading your listings...</p>
+            <div className="listings-loading">
+              <div className="spinner-large"></div>
+              <p>Loading your listings...</p>
+            </div>
           ) : listings.length === 0 ? (
-            <div className="empty-inline">
-              <p>No listings yet. Add your first crop to start getting buyer interest.</p>
+            <div className="listings-empty">
+              <GiWheat className="empty-illustration" />
+              <h3>No listings yet</h3>
+              <p>Add your first crop listing using the form on the left to start connecting with buyers.</p>
             </div>
           ) : (
-            <div className="listing-stack">
+            <div className="listings-grid">
               {listings.map((listing) => (
-                <article key={listing.id} className="listing-card farmer-card">
-                  <div className="listing-topline">
-                    <div>
-                      <span className="listing-title">{listing.cropName}</span>
-                      <p>
-                        {listing.quantity} • {listing.location}
-                      </p>
+                <div key={listing.id} className="listing-item">
+                  <div className="listing-crop">
+                    <GiWheat className="crop-icon" />
+                    <div className="crop-title">
+                      <h3>{listing.cropName}</h3>
+                      <p>{listing.quantity}</p>
                     </div>
-                    <span className="price-chip">{formatCurrency(listing.price)}</span>
+                    <span className="crop-price">{formatCurrency(listing.price)}</span>
                   </div>
-                  <div className="listing-footer">
-                    <span>Contact: {listing.contactNumber}</span>
-                    <button
-                      type="button"
-                      className="button button-danger"
-                      onClick={() => handleDelete(listing.id)}
-                    >
-                      Delete
-                    </button>
+
+                  <div className="listing-info">
+                    <div className="info-item">
+                      <FiMapPin className="info-icon" />
+                      <span className="info-text">{listing.location}</span>
+                    </div>
+                    <div className="info-item">
+                      <FiPhone className="info-icon" />
+                      <span className="info-text">{listing.contactNumber}</span>
+                    </div>
                   </div>
-                </article>
+
+                  <button
+                    type="button"
+                    className="button-delete"
+                    onClick={() => handleDelete(listing.id)}
+                    title="Delete listing"
+                  >
+                    <FiX />
+                  </button>
+                </div>
               ))}
             </div>
           )}

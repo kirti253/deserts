@@ -2,6 +2,8 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { FiUser, FiPhone, FiLogIn } from "react-icons/fi";
+import { GiWheat } from "react-icons/gi";
 import { registerUser } from "@/lib/api";
 import { getStoredUser, storeUser } from "@/lib/storage";
 import { UserRole } from "@/lib/types";
@@ -63,53 +65,76 @@ export function AuthForm({ presetRole }: AuthFormProps) {
   }
 
   return (
-    <form className="panel-card form-card" onSubmit={handleSubmit}>
-      <div className="field-grid">
-        <label className="field">
-          <span>Name</span>
-          <input
-            value={name}
-            onChange={(event) => setName(event.target.value)}
-            placeholder="Enter your full name"
-          />
-        </label>
+    <form className="auth-form-card" onSubmit={handleSubmit}>
+      <div className="form-inner">
+        <div className="form-fields">
+          <label className="auth-field">
+            <span className="auth-label">Your Name</span>
+            <input
+              type="text"
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+              placeholder="Full name"
+              required
+            />
+          </label>
 
-        <label className="field">
-          <span>Phone number</span>
-          <input
-            value={phone}
-            onChange={(event) => setPhone(event.target.value)}
-            placeholder="Enter your phone number"
-            inputMode="tel"
-          />
-        </label>
-      </div>
+          <label className="auth-field">
+            <span className="auth-label">Phone Number</span>
+            <input
+              type="tel"
+              value={phone}
+              onChange={(event) => setPhone(event.target.value)}
+              placeholder="+91 9876543210"
+              inputMode="tel"
+              required
+            />
+          </label>
+        </div>
 
-      <div className="field">
-        <span>Choose role</span>
-        <div className="role-toggle">
+        <div className="form-divider">
+          <span>Select your role</span>
+        </div>
+
+        <div className="role-selection">
           <button
             type="button"
-            className={`role-pill ${role === "farmer" ? "active" : ""}`}
+            className={`role-option ${role === "farmer" ? "active" : ""}`}
             onClick={() => setRole("farmer")}
           >
-            Farmer
+            <GiWheat className="role-icon" />
+            <span className="role-title">Farmer</span>
+            <span className="role-desc">Sell your crops</span>
           </button>
+
           <button
             type="button"
-            className={`role-pill ${role === "buyer" ? "active" : ""}`}
+            className={`role-option ${role === "buyer" ? "active" : ""}`}
             onClick={() => setRole("buyer")}
           >
-            Buyer
+            <FiUser className="role-icon" />
+            <span className="role-title">Buyer</span>
+            <span className="role-desc">Browse & purchase</span>
           </button>
         </div>
+
+        {error && <div className="auth-error">{error}</div>}
+
+        <button 
+          type="submit" 
+          className="button button-primary button-full auth-submit" 
+          disabled={submitting}
+        >
+          {submitting ? (
+            <>
+              <span className="spinner-small"></span>
+              Connecting...
+            </>
+          ) : (
+            "Continue"
+          )}
+        </button>
       </div>
-
-      {error ? <p className="form-error">{error}</p> : null}
-
-      <button type="submit" className="button button-primary button-full" disabled={submitting}>
-        {submitting ? "Continuing..." : "Continue"}
-      </button>
     </form>
   );
 }
