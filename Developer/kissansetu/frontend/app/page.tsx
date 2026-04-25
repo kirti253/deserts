@@ -15,6 +15,29 @@ function NoMiddlemenIcon() {
   );
 }
 
+function ShieldIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="M12 2.75 19.25 6v6.4c0 4.76-3.21 7.97-7.25 8.85-4.04-.88-7.25-4.09-7.25-8.85V6L12 2.75Z"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.8"
+      />
+      <path
+        d="M8.5 12.2 11 14.7l4.6-5"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.8"
+      />
+    </svg>
+  );
+}
+
 function PricingIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -60,6 +83,12 @@ const features = [
     icon: <PricingIcon />
   },
   {
+    title: "Secure & Verified",
+    description: "Profiles, listings, and conversations built with trust-first UX.",
+    accentClass: "feature-icon-blue",
+    icon: <ShieldIcon />
+  },
+  {
     title: "Easy Contact",
     description: "Connect instantly via WhatsApp or phone. Simple, fast, and efficient.",
     accentClass: "feature-icon-green",
@@ -70,7 +99,7 @@ const features = [
 export default function LandingPage() {
   return (
     <section className="page page-home">
-      <section className="landing-hero">
+      <section className="landing-hero" aria-label="Hero">
         <div className="landing-hero-content">
           <span className="landing-kicker">Farmer Direct Market</span>
           <h1>Sell Direct. Earn Fair.</h1>
@@ -86,14 +115,23 @@ export default function LandingPage() {
               I&apos;m a Buyer
             </Link>
           </div>
+          <div className="hero-micro">
+            <span className="micro-pill">Instant buyer reach</span>
+            <span className="micro-pill">Transparent pricing</span>
+            <span className="micro-pill">Mobile-first</span>
+          </div>
         </div>
       </section>
 
-      <section className="landing-features">
+      <section className="landing-features" id="features" aria-label="Features">
         <div className="landing-features-inner">
           <div className="section-heading landing-heading">
             <span className="eyebrow landing-eyebrow">Why Choose Us</span>
             <h2>Fair Trade, Direct Connection</h2>
+            <p className="landing-subheading">
+              A clean, modern workflow that helps farmers list faster and helps buyers source
+              smarter.
+            </p>
           </div>
 
           <div className="feature-grid landing-feature-grid">
@@ -107,6 +145,202 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+
+      <section className="landing-preview" id="preview" aria-label="Product preview">
+        <div className="section-block landing-preview-inner">
+          <div className="landing-preview-grid">
+            <div className="section-heading compact">
+              <span className="eyebrow">Dashboard preview</span>
+              <h2>Everything you need to trade — in one view.</h2>
+              <p>
+                A lightweight dashboard to manage listings, track interest, and compare prices
+                without digging through spreadsheets.
+              </p>
+              <div className="hero-actions preview-actions">
+                <Link href="/farmer" className="button button-primary">
+                  Open dashboard
+                </Link>
+                <Link href="/marketplace" className="button button-secondary">
+                  Browse marketplace
+                </Link>
+              </div>
+            </div>
+
+            <div className="preview-card" role="img" aria-label="Dashboard mock preview">
+              <div className="preview-topbar">
+                <div className="preview-dots" aria-hidden="true">
+                  <span />
+                  <span />
+                  <span />
+                </div>
+                <div className="preview-pill">Live preview</div>
+              </div>
+              <div className="preview-content">
+                <div className="preview-stats">
+                  <div className="preview-stat">
+                    <span className="preview-label">Active listings</span>
+                    <strong>12</strong>
+                  </div>
+                  <div className="preview-stat">
+                    <span className="preview-label">Interested buyers</span>
+                    <strong>48</strong>
+                  </div>
+                  <div className="preview-stat">
+                    <span className="preview-label">Avg. price uplift</span>
+                    <strong>+14%</strong>
+                  </div>
+                </div>
+
+                <div className="preview-table">
+                  <div className="preview-row preview-row-head">
+                    <span>Crop</span>
+                    <span>Qty</span>
+                    <span>Price</span>
+                    <span>Status</span>
+                  </div>
+                  <div className="preview-row">
+                    <span>Tomato</span>
+                    <span>1.2T</span>
+                    <span>₹18/kg</span>
+                    <span className="status-chip status-green">Hot</span>
+                  </div>
+                  <div className="preview-row">
+                    <span>Wheat</span>
+                    <span>800kg</span>
+                    <span>₹24/kg</span>
+                    <span className="status-chip status-blue">New</span>
+                  </div>
+                  <div className="preview-row">
+                    <span>Onion</span>
+                    <span>1.9T</span>
+                    <span>₹13/kg</span>
+                    <span className="status-chip status-amber">Stable</span>
+                  </div>
+                </div>
+              </div>
+              <div className="preview-glow" aria-hidden="true" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="landing-social-proof" id="testimonials" aria-label="Testimonials">
+        <div className="section-block landing-proof-inner">
+          <div className="section-heading landing-heading landing-heading-left">
+            <span className="eyebrow">Trusted, transparent, fast</span>
+            <h2>Built for a modern trading experience.</h2>
+            <p>Clean UX, clear pricing, and simple contact flows that work on any device.</p>
+          </div>
+
+          <div className="proof-grid">
+            <article className="proof-card">
+              <p className="quote">
+                “The marketplace view is clean and quick. I can compare prices and contact sellers
+                in minutes.”
+              </p>
+              <div className="quote-meta">
+                <span className="avatar" aria-hidden="true">
+                  A
+                </span>
+                <div>
+                  <strong>Ananya</strong>
+                  <span className="muted-copy">Wholesale buyer</span>
+                </div>
+              </div>
+            </article>
+            <article className="proof-card">
+              <p className="quote">
+                “Listing a crop is straightforward. I feel more confident about pricing with the
+                comparison insights.”
+              </p>
+              <div className="quote-meta">
+                <span className="avatar" aria-hidden="true">
+                  R
+                </span>
+                <div>
+                  <strong>Rakesh</strong>
+                  <span className="muted-copy">Farmer</span>
+                </div>
+              </div>
+            </article>
+            <article className="proof-card proof-card-accent">
+              <div className="stat-stack">
+                <div className="stat">
+                  <strong>2–3×</strong>
+                  <span className="muted-copy">faster buyer outreach</span>
+                </div>
+                <div className="stat">
+                  <strong>24/7</strong>
+                  <span className="muted-copy">mobile access</span>
+                </div>
+                <div className="stat">
+                  <strong>0</strong>
+                  <span className="muted-copy">middlemen fees</span>
+                </div>
+              </div>
+              <Link href="/auth" className="text-link">
+                Start trading →
+              </Link>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <footer className="site-footer" aria-label="Footer">
+        <div className="site-footer-inner">
+          <div className="footer-brand">
+            <div className="brand-mark">
+              <span className="brand-dot" />
+              <div>
+                <strong>Kissan Setu</strong>
+                <span>Direct crop trading</span>
+              </div>
+            </div>
+            <p className="muted-copy">
+              A modern, minimal platform for direct farmer-to-buyer trading.
+            </p>
+          </div>
+
+          <div className="footer-columns">
+            <div className="footer-col">
+              <strong>Product</strong>
+              <Link href="/#features">Features</Link>
+              <Link href="/#preview">Preview</Link>
+              <Link href="/marketplace">Marketplace</Link>
+            </div>
+            <div className="footer-col">
+              <strong>Company</strong>
+              <Link href="/">About</Link>
+              <Link href="/">Privacy</Link>
+              <Link href="/">Terms</Link>
+            </div>
+            <div className="footer-col">
+              <strong>Social</strong>
+              <a className="social-link" href="#" aria-label="Twitter">
+                <span className="social-icon" aria-hidden="true">
+                  𝕏
+                </span>
+                Twitter
+              </a>
+              <a className="social-link" href="#" aria-label="LinkedIn">
+                <span className="social-icon" aria-hidden="true">
+                  in
+                </span>
+                LinkedIn
+              </a>
+              <a className="social-link" href="#" aria-label="GitHub">
+                <span className="social-icon" aria-hidden="true">
+                  ⌂
+                </span>
+                GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+        <div className="footer-bottom">
+          <span>© {new Date().getFullYear()} Kissan Setu. All rights reserved.</span>
+        </div>
+      </footer>
     </section>
   );
 }

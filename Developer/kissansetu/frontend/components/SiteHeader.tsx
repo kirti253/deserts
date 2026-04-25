@@ -18,9 +18,15 @@ export function SiteHeader() {
       </Link>
 
       <nav className="site-nav">
-        <Link href="/auth">Login</Link>
-        <Link href="/farmer">Farmer Dashboard</Link>
-        <Link href="/marketplace">Buyer Marketplace</Link>
+        <Link href="/#features">Features</Link>
+        <Link href="/#preview">Preview</Link>
+        <Link href="/#testimonials">Stories</Link>
+        <Link href="/auth" className="button button-secondary button-sm nav-cta-secondary">
+          Login
+        </Link>
+        <Link href="/auth" className="button button-primary button-sm nav-cta">
+          Get started
+        </Link>
       </nav>
     </header>
   );
